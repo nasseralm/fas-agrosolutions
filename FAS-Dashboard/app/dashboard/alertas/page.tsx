@@ -48,7 +48,7 @@ export default function AlertasPage() {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    queueMicrotask(() => setMounted(true));
     if (!hasToken()) router.replace("/login");
   }, [router]);
 
