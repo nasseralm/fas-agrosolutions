@@ -44,7 +44,7 @@ jobs:
 
       - name: Rodar ESLint
         working-directory: FAS-Dashboard
-        run: npx next lint .
+        run: npx eslint .
 
   build-images:
     name: Build imagens Docker
