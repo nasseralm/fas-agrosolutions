@@ -51,7 +51,7 @@ namespace FAS.Tests
             var mockUsuarioService = new Mock<FAS.Application.Interfaces.IUsuarioService>();
             mockUsuarioService.Setup(s => s.SelecionarPorEmail(email)).ReturnsAsync(usuarioViewModel);
 
-            var configDict = new Dictionary<string, string>
+            var configDict = new Dictionary<string, string?>
             {
                 ["jwt:secretKey"] = "ChaveSecretaMinima32Caracteres!!",
                 ["jwt:issuer"] = "test",
@@ -89,7 +89,7 @@ namespace FAS.Tests
             mockRepo.Setup(r => r.SelecionarPorEmail(email)).ReturnsAsync(usuario);
 
             var mockUsuarioService = new Mock<FAS.Application.Interfaces.IUsuarioService>();
-            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string>()).Build();
+            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>()).Build();
             var mockLogger = new Mock<ILogger<AuthenticateService>>();
             var mockUow = new Mock<IUnitOfWork>();
             var mockEventPublisher = new Mock<IEventPublisher>();
@@ -110,10 +110,10 @@ namespace FAS.Tests
         {
             var email = "naoexiste@teste.com";
             var mockRepo = new Mock<IUsuarioRepository>();
-            mockRepo.Setup(r => r.SelecionarPorEmail(email)).ReturnsAsync((Usuario)null);
+            mockRepo.Setup(r => r.SelecionarPorEmail(email)).ReturnsAsync((Usuario?)null);
 
             var mockUsuarioService = new Mock<FAS.Application.Interfaces.IUsuarioService>();
-            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string>()).Build();
+            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>()).Build();
             var mockLogger = new Mock<ILogger<AuthenticateService>>();
             var mockUow = new Mock<IUnitOfWork>();
             var mockEventPublisher = new Mock<IEventPublisher>();
@@ -141,7 +141,7 @@ namespace FAS.Tests
             mockRepo.Setup(r => r.SelecionarPorEmail(email)).ReturnsAsync(usuario);
 
             var mockUsuarioService = new Mock<FAS.Application.Interfaces.IUsuarioService>();
-            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string>()).Build();
+            var config = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string?>()).Build();
             var mockLogger = new Mock<ILogger<AuthenticateService>>();
             var mockUow = new Mock<IUnitOfWork>();
             var mockEventPublisher = new Mock<IEventPublisher>();
