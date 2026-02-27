@@ -2,6 +2,8 @@
 
 Este repositório contém as soluções do projeto (FAS-Usuarios, FAS-Propriedades, FAS-DataReceiver, etc.). Todas as APIs que usam SQL Server compartilham **um único container SQL** e **um único database: AgroSolutions**.
 
+Para **demonstração de infraestrutura (Kubernetes, Grafana, Prometheus) e esteira CI/CD**, incluindo testes unitários obrigatórios para deploy local, veja **[DEMONSTRACAO.md](DEMONSTRACAO.md)**.
+
 ## Stack completo com Docker (recomendado)
 
 Na **raiz do repositório** (`repos`), use o `docker-compose.yml` para subir tudo de uma vez:
@@ -9,6 +11,8 @@ Na **raiz do repositório** (`repos`), use o `docker-compose.yml` para subir tud
 ```bash
 docker compose up -d
 ```
+
+**Deploy local:** Se você está rodando a aplicação localmente, é obrigatório executar os **testes unitários** antes do deploy. Na raiz: `.\run-tests.ps1` (Windows) ou `./run-tests.sh` (Linux/Mac). Só depois suba a stack com `docker compose up -d`. Ver [DEMONSTRACAO.md](DEMONSTRACAO.md).
 
 Ou use um dos scripts na raiz:
 
@@ -46,6 +50,22 @@ Cada pasta de solução pode ter seu próprio `docker-compose.yml` para rodar s�
 - **FAS-DataReceiver**: `cd FAS-DataReceiver && docker compose up -d` (usa também Mongo, Redis, Kafka)
 
 Em todos os casos, a connection string usa **Database=AgroSolutions** e a mesma senha do SQL.
+
+## Monitoramento (Prometheus + Grafana + Loki)
+
+Com o stack no ar (`docker compose up -d`), estão disponíveis:
+
+| Serviço     | URL                    | Descrição |
+|-------------|------------------------|-----------|
+| Prometheus  | http://localhost:9090  | Métricas das APIs e dos containers (scrape a cada 15s). |
+| Grafana     | http://localhost:3000  | Dashboards (login: `admin` / senha: `admin`). Datasources: Prometheus e Loki. Pasta **Observability** com dashboards de containers (cAdvisor) e logs (Loki). |
+| cAdvisor    | http://localhost:8086  | Métricas de CPU/memória/rede por container Docker (scrape pelo Prometheus). |
+| Loki        | http://localhost:3100  | Agregação de logs; consultas no Grafana via LogQL. |
+| Alloy       | http://localhost:12345  | Coleta logs dos containers (via Docker socket) e envia ao Loki. |
+
+As APIs **ingestion-api**, **fas-api-properties** e **fas-api-users** expõem `/metrics`. O **cAdvisor** expõe métricas de todos os containers. O **Alloy** descobre containers via Docker e envia stdout/stderr para o **Loki**. No Grafana, use o datasource **Loki** para ver logs (Explorer ou dashboard "Logs (Loki)") e o **Prometheus** para métricas (dashboard "Containers (cAdvisor)" e painéis das APIs).
+
+Configuração: `monitoring/prometheus.yml`, `monitoring/loki/loki.yml`, `monitoring/alloy/alloy.alloy`, `monitoring/grafana/provisioning/` (datasources e dashboards).
 
 ## Resumo
 

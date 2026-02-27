@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, Database, ExternalLink, Sprout } from "lucide-react";
+import { BookOpen, Database, ExternalLink, Sprout, Gauge } from "lucide-react";
 
 const getApiUrl = () => process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8082";
 const getPropertiesUrl = () => process.env.NEXT_PUBLIC_PROPERTIES_API_URL ?? "http://localhost:8081";
@@ -10,6 +10,8 @@ const getIngestionUrl = () => process.env.NEXT_PUBLIC_INGESTION_API_URL ?? "http
 const getMongoExpressUrl = () => process.env.NEXT_PUBLIC_MONGO_EXPRESS_URL ?? "http://localhost:8083";
 const getRedisCommanderUrl = () => process.env.NEXT_PUBLIC_REDIS_COMMANDER_URL ?? "http://localhost:8084";
 const getAdminerUrl = () => process.env.NEXT_PUBLIC_ADMINER_URL ?? "http://localhost:8085";
+const getPrometheusUrl = () => process.env.NEXT_PUBLIC_PROMETHEUS_URL ?? "http://localhost:9090";
+const getGrafanaUrl = () => process.env.NEXT_PUBLIC_GRAFANA_URL ?? "http://localhost:3000";
 
 const apis = [
   {
@@ -184,6 +186,70 @@ export default function ApiDocsPage() {
           <p className="mt-4 text-sm text-slate-500">
             Se o iframe não carregar (bloqueio do navegador), use o link &quot;Abrir&quot; para abrir a interface em nova aba.
           </p>
+        </section>
+
+        {/* Prometheus e Grafana — Monitoramento */}
+        <section className="mt-12 border-t border-slate-200 pt-10">
+          <h2 className="flex items-center gap-2 text-xl font-semibold text-slate-800">
+            <Gauge className="h-6 w-6 text-emerald-600" />
+            Monitoramento — Prometheus e Grafana
+          </h2>
+          <p className="mt-1 text-slate-500">
+            Métricas das APIs e dashboards. Suba o stack com{" "}
+            <code className="rounded bg-slate-200 px-1">docker compose up -d</code> (Prometheus na porta 9090, Grafana na 3000).
+          </p>
+
+          <div className="mt-6 grid gap-6 sm:grid-cols-1 lg:grid-cols-2">
+            <div className="flex flex-col rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+              <div className="border-b border-slate-100 bg-slate-50 px-4 py-3 flex items-center justify-between">
+                <span className="font-semibold text-slate-800">Prometheus</span>
+                <a
+                  href={getPrometheusUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+                >
+                  Abrir <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+              <div className="h-64 bg-slate-100">
+                <iframe
+                  title="Prometheus"
+                  src={getPrometheusUrl()}
+                  className="h-full w-full border-0"
+                  sandbox="allow-scripts allow-same-origin allow-forms"
+                />
+              </div>
+              <p className="px-4 py-2 text-xs text-slate-500">
+                Métricas das APIs e dos containers (cAdvisor). Status → Targets.
+              </p>
+            </div>
+
+            <div className="flex flex-col rounded-xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+              <div className="border-b border-slate-100 bg-slate-50 px-4 py-3 flex items-center justify-between">
+                <span className="font-semibold text-slate-800">Grafana</span>
+                <a
+                  href={getGrafanaUrl()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+                >
+                  Abrir <ExternalLink className="h-3.5 w-3.5" />
+                </a>
+              </div>
+              <div className="h-64 bg-slate-100">
+                <iframe
+                  title="Grafana"
+                  src={getGrafanaUrl()}
+                  className="h-full w-full border-0"
+                  sandbox="allow-scripts allow-same-origin allow-forms"
+                />
+              </div>
+              <p className="px-4 py-2 text-xs text-slate-500">
+                Dashboards. Login: admin / admin. Datasources Prometheus e Loki; pasta Observability (containers, logs).
+              </p>
+            </div>
+          </div>
         </section>
       </main>
     </div>

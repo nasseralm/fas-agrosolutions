@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: fas
+  labels:
+    app.kubernetes.io/name: fas
+    app.kubernetes.io/part-of: fas-stack
+

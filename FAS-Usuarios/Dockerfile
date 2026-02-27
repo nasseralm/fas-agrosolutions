@@ -14,8 +14,7 @@ COPY ["FAS.Domain/FAS.Domain.csproj", "FAS.Domain/"]
 COPY ["FAS.Infra.Data/FAS.Infra.Data.csproj", "FAS.Infra.Data/"]
 COPY ["FAS.Infra.Ioc/FAS.Infra.Ioc.csproj", "FAS.Infra.Ioc/"]
 
-RUN --mount=type=cache,target=/root/.nuget/packages \
-    dotnet restore "FAS.API/FAS.API.csproj"
+RUN dotnet restore "FAS.API/FAS.API.csproj"
 
 ############################
 # 2 - BUILD
@@ -26,8 +25,7 @@ WORKDIR /src
 COPY . .
 
 WORKDIR /src/FAS.API
-RUN --mount=type=cache,target=/root/.nuget/packages \
-    dotnet build "FAS.API.csproj" \
+RUN dotnet build "FAS.API.csproj" \
         -c Release \
         --no-restore \
         -o /app/build
@@ -36,8 +34,7 @@ RUN --mount=type=cache,target=/root/.nuget/packages \
 # 3 - PUBLISH
 ############################
 FROM build AS publish
-RUN --mount=type=cache,target=/root/.nuget/packages \
-    dotnet publish "FAS.API.csproj" \
+RUN dotnet publish "FAS.API.csproj" \
         -c Release \
         --no-restore \
         -o /app/publish \

@@ -1,6 +1,7 @@
 using FAS.API.Middleware;
 using FAS.API.Seed;
 using FAS.Infra.Data.Context;
+using Prometheus;
 using FAS.Infra.Ioc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -64,6 +65,7 @@ try
 
     app.UseMiddleware<ExceptionMiddleware>();
 
+    app.UseHttpMetrics();
     app.UseCors("CorsPolicy");
 
     app.UseHttpsRedirection();
@@ -72,6 +74,7 @@ try
     app.UseAuthorization();
 
     app.MapControllers();
+    app.MapMetrics();
 
     Log.Information("API Properties (Propriedades/Talhões) iniciada com sucesso!");
 

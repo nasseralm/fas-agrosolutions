@@ -9,6 +9,7 @@ using Agro.DataReceiver.Infrastructure.Mongo;
 using Agro.DataReceiver.Infrastructure.Redis;
 using Agro.DataReceiver.Infrastructure.SqlServer;
 using MongoDB.Driver;
+using Prometheus;
 using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -86,18 +87,21 @@ builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+// Swagger disponível em todos os ambientes (incl. Docker) para documentação e testes
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ingestion API v1");
+});
 
 app.MapHealthChecks("/health");
 
+app.UseHttpMetrics();
 app.UseCors();
 
 app.UseApiKeyAuthentication();
 
 app.MapControllers();
+app.MapMetrics();
 
 app.Run();
