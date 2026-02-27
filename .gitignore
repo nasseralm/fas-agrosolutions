@@ -1,0 +1,26 @@
+# Dependências e build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+.env
+.env.local
+.env.*.local
+
+# .NET
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Dd]ebug/
+[Rr]elease/
+.vs/
+*.user
+*.suo
+
+# Backups e artefatos locais
+*.bak
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

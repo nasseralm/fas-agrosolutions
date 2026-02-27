@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Gráfico histórico de umidade — alto contraste (eixos, linha, pontos, área) */
+.chart-umidade .recharts-cartesian-axis-tick text,
+.chart-umidade .recharts-legend-item-text,
+.chart-umidade .recharts-label text {
+  fill: #0f172a !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+}
+
+.chart-umidade .recharts-default-legend .recharts-legend-item-text {
+  color: #0f172a !important;
+  font-weight: 700 !important;
+}
+
+/* Legenda "umidade" e qualquer texto Tremor no gráfico — alto contraste em bg #F8FAFC */
+.chart-umidade .text-tremor-content,
+.chart-umidade .text-tremor-default,
+.chart-umidade .dark\:text-dark-tremor-content {
+  color: #0f172a !important;
+  font-weight: 600 !important;
+}
+
+.chart-umidade .recharts-cartesian-grid line {
+  stroke: #94a3b8 !important;
+  stroke-width: 1;
+}
+
+/* Linha do gráfico — bem visível */
+.chart-umidade .recharts-area-curve,
+.chart-umidade .recharts-area {
+  stroke: #047857 !important;
+  stroke-width: 4 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* Área preenchida — mais escura */
+.chart-umidade .recharts-area-area {
+  fill: rgba(4, 120, 87, 0.35) !important;
+}
+
+/* Pontos (dots) — visíveis */
+.chart-umidade .recharts-dot,
+.chart-umidade .recharts-area-dot,
+.chart-umidade .recharts-dot circle,
+.chart-umidade .recharts-area-dot circle {
+  fill: #047857 !important;
+  stroke: #064e3b !important;
+  stroke-width: 2.5 !important;
+}
+
+.chart-umidade .recharts-tooltip-wrapper .recharts-default-tooltip {
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+/* Cabeçalhos de tabela Tremor — alto contraste */
+.tremor-TableHeaderCell-root,
+.text-tremor-content-strong,
+.dark\:text-dark-tremor-content-strong {
+  color: #0f172a !important;
+}
+
+/* Células do corpo da tabela Tremor — texto mais escuro */
+.tremor-TableBody-root .tremor-TableCell-root {
+  color: #1e293b !important;
+}
+
+.tremor-TableBody-root .tremor-TableCell-root.text-slate-600 {
+  color: #334155 !important;
+}
+
+/* Badge Tremor — fundo sólido + texto branco para contraste */
+.tremor-Badge-root.ring-red-500 .tremor-Badge-text,
+.tremor-Badge-root.bg-red-500 .tremor-Badge-text {
+  color: #ffffff !important;
+}
+
+.tremor-Badge-root.ring-red-500,
+.tremor-Badge-root.bg-red-500 {
+  background-color: rgb(239 68 68) !important;
+  border-color: rgb(185 28 28) !important;
+}
+
+.tremor-Badge-root.ring-amber-500 .tremor-Badge-text,
+.tremor-Badge-root.bg-amber-500 .tremor-Badge-text {
+  color: #ffffff !important;
+}
+
+.tremor-Badge-root.ring-amber-500,
+.tremor-Badge-root.bg-amber-500 {
+  background-color: rgb(245 158 11) !important;
+  border-color: rgb(180 83 9) !important;
+}
+
+.tremor-Badge-root.ring-emerald-500 .tremor-Badge-text,
+.tremor-Badge-root.bg-emerald-500 .tremor-Badge-text {
+  color: #ffffff !important;
+}
+
+.tremor-Badge-root.ring-emerald-500,
+.tremor-Badge-root.bg-emerald-500 {
+  background-color: rgb(16 185 129) !important;
+  border-color: rgb(5 150 105) !important;
+}

@@ -1,0 +1,18 @@
+# API FAS-Propriedades (standalone): espera SQL Server em host.docker.internal:1433, database AgroSolutions
+# Para stack completo, use o docker-compose.yml na raiz do repositório.
+
+services:
+  fas-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        DOTNET_VERSION: "8.0"
+    image: fas-api:dev
+    container_name: fas-api
+    ports:
+      - "8081:8080"
+    environment:
+      ASPNETCORE_URLS: "http://+:8080"
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: "Server=host.docker.internal,1433;Database=AgroSolutions;User Id=sa;Password=Your_strong_Passw0rd!;TrustServerCertificate=True;Encrypt=False"

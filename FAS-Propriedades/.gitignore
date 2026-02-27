@@ -1,0 +1,28 @@
+# Build results
+[Dd]ebug/
+[Rr]elease/
+[Bb]in/
+[Oo]bj/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+.idea/
+
+# User-specific
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# OS
+.DS_Store
+
+# SQLite (dev)
+*.db
+*.db-shm
+*.db-wal
+
+# Test results
+TestResults/
+coverage/

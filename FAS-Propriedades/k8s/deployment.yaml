@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fas-propriedades
+  namespace: fiapk8s
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fas-propriedades
+  template:
+    metadata:
+      labels:
+        app: fas-propriedades
+    spec:
+      containers:
+        - name: fas-propriedades
+          image: __IMAGE__
+          ports:
+            - containerPort: 8080
+          env:
+            - name: ASPNETCORE_URLS
+              value: "http://+:8080"
+

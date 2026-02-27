@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Backlog (Histórias e Tarefas) — Hackathon AgroSolutions</title>
+  <style>
+    /* ===== Print setup ===== */
+    @page { size: A4; margin: 18mm 16mm; }
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, "Noto Sans", "Liberation Sans", sans-serif;
+      color: #111827;
+      margin: 0;
+      background: #ffffff;
+      line-height: 1.35;
+    }
+
+    /* ===== Layout helpers ===== */
+    .container { max-width: 900px; margin: 0 auto; padding: 22px; }
+    .page-break { page-break-before: always; break-before: page; }
+    .avoid-break { page-break-inside: avoid; break-inside: avoid; }
+
+    /* ===== Cover ===== */
+    .cover {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 28mm 16mm;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border: 1px solid #d1d5db;
+      border-radius: 999px;
+      font-size: 12px;
+      color: #374151;
+      margin-bottom: 10px;
+    }
+    .cover h1 {
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: -0.02em;
+    }
+    .cover p {
+      margin: 10px 0 0 0;
+      font-size: 14px;
+      color: #4b5563;
+      max-width: 70ch;
+    }
+    .meta {
+      margin-top: 18px;
+      font-size: 12px;
+      color: #6b7280;
+    }
+
+    /* ===== Headings ===== */
+    h1, h2, h3 { margin: 0 0 10px 0; }
+    h2 {
+      margin-top: 22px;
+      font-size: 18px;
+      padding: 10px 12px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+    }
+    h3 {
+      margin-top: 12px;
+      font-size: 14px;
+      color: #111827;
+    }
+
+    /* ===== Table ===== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    thead th {
+      background: #111827;
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 12px;
+      text-align: left;
+      padding: 10px 10px;
+    }
+    tbody td {
+      font-size: 12px;
+      padding: 9px 10px;
+      border-top: 1px solid #e5e7eb;
+      vertical-align: top;
+    }
+    tbody tr:nth-child(even) td { background: #f9fafb; }
+
+    .col-id { width: 90px; font-weight: 700; color: #111827; }
+    .col-tag { width: 110px; }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 11px;
+      border: 1px solid #d1d5db;
+      background: #ffffff;
+      color: #374151;
+      white-space: nowrap;
+    }
+
+    /* ===== TOC ===== */
+    .toc h1 { font-size: 22px; margin-bottom: 10px; }
+    .toc ol { margin: 0; padding-left: 18px; }
+    .toc li { margin: 6px 0; font-size: 13px; color: #111827; }
+    .toc a { color: #111827; text-decoration: none; }
+    .toc a:hover { text-decoration: underline; }
+
+    /* ===== Footer note ===== */
+    .note {
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px dashed #d1d5db;
+      border-radius: 10px;
+      color: #374151;
+      font-size: 12px;
+      background: #fafafa;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- CAPA -->
+  <section class="cover">
+    <span class="badge">Hackathon • Backlog (US + Tarefas)</span>
+    <h1>AgroSolutions — Plataforma de Agricultura de Precisão (MVP)</h1>
+    <p>
+      Documento de fragmentação em <strong>Histórias (US)</strong> e <strong>Tarefas (T)</strong>,
+      pronto para impressão em PDF.
+    </p>
+    <div class="meta">
+      <div><strong>Fonte:</strong> Enunciado “HACKATHON 8NETT”</div>
+      <div><strong>Escopo:</strong> Apenas histórias e tarefas (sem arquitetura/contratos/código)</div>
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <!-- SUMÁRIO -->
+  <section class="container toc">
+    <h1>Sumário</h1>
+    <ol>
+      <li><a href="#us-001">US-001 — Login do Produtor Rural (e-mail e senha)</a></li>
+      <li><a href="#us-002">US-002 — Acesso autorizado aos recursos por produtor</a></li>
+      <li><a href="#us-003">US-003 — Cadastro de Propriedade</a></li>
+      <li><a href="#us-004">US-004 — Cadastro de Talhões com cultura por talhão</a></li>
+      <li><a href="#us-005">US-005 — API de Ingestão de Dados de Sensores (simulado)</a></li>
+      <li><a href="#us-006">US-006 — Simulador de envio de dados de sensores</a></li>
+      <li><a href="#us-007">US-007 — Persistir leituras de sensores para histórico</a></li>
+      <li><a href="#us-008">US-008 — Motor de Alertas: “Alerta de Seca”</a></li>
+      <li><a href="#us-009">US-009 — Exibir alertas no dashboard (API)</a></li>
+      <li><a href="#us-010">US-010 — Dashboard: histórico em gráfico</a></li>
+      <li><a href="#us-011">US-011 — Dashboard: status geral por talhão</a></li>
+      <li><a href="#us-012">US-012 — Dashboard: lista de alertas ao produtor</a></li>
+      <li><a href="#us-013">US-013 — Mensageria entre microsserviços</a></li>
+      <li><a href="#us-014">US-014 — Orquestração com Kubernetes</a></li>
+      <li><a href="#us-015">US-015 — Observabilidade com Grafana + Zabbix/Prometheus</a></li>
+      <li><a href="#us-016">US-016 — Pipeline CI/CD automatizado</a></li>
+      <li><a href="#us-017">US-017 — Testes unitários mínimos</a></li>
+      <li><a href="#us-018">US-018 — Entregável: desenho da solução MVP</a></li>
+      <li><a href="#us-019">US-019 — Entregável: demonstração do MVP funcionando</a></li>
+      <li><a href="#us-020">US-020 — Entregável: vídeo + link do repositório público</a></li>
+      <li><a href="#us-021">US-021 (BÔNUS) — NoSQL para dados de sensores</a></li>
+      <li><a href="#us-022">US-022 (BÔNUS) — Ingestão Serverless com API Gateway + Functions</a></li>
+      <li><a href="#us-023">US-023 (BÔNUS) — Integração com API de previsão do tempo</a></li>
+    </ol>
+
+    <div class="note">
+      Dica: para impressão mais “limpa”, no diálogo de impressão marque “Gráficos de fundo” (opcional)
+      e use margens padrão.
+    </div>
+  </section>
+
+  <div class="page-break"></div>
+
+  <main class="container">
+
+    <!-- US-001 -->
+    <section id="us-001" class="avoid-break">
+      <h2>US-001 — Login do Produtor Rural (e-mail e senha)</h2>
+      <table>
+        <thead>
+          <tr>
+            <th class="col-id">Tarefa</th>
+            <th class="col-tag">Tag</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="col-id">T-001</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar microsserviço <strong>Identity</strong> (skeleton + Dockerfile).</td></tr>
+          <tr><td class="col-id">T-002</td><td class="col-tag"><span class="tag">BE</span></td><td>Modelar entidade/tabela de <strong>Usuário/Produtor</strong> (campos mínimos: email, senha hash, status).</td></tr>
+          <tr><td class="col-id">T-003</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint de <strong>login</strong> (email/senha) com validação.</td></tr>
+          <tr><td class="col-id">T-004</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar geração de <strong>token</strong> (ex.: JWT) e retorno no login.</td></tr>
+          <tr><td class="col-id">T-005</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar middleware/filtro de autenticação para proteger endpoints dos outros serviços.</td></tr>
+          <tr><td class="col-id">T-006</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar <strong>usuário seed</strong> para testes/demonstração.</td></tr>
+          <tr><td class="col-id">T-007</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários do fluxo de login (credenciais válidas/ inválidas).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-002 -->
+    <section id="us-002">
+      <h2>US-002 — Acesso autorizado aos recursos por produtor (vincular dados ao dono)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-008</td><td class="col-tag"><span class="tag">BE</span></td><td>Definir como os serviços recebem o <strong>ProducerId/UserId</strong> do token.</td></tr>
+          <tr><td class="col-id">T-009</td><td class="col-tag"><span class="tag">BE</span></td><td>Aplicar autorização nos endpoints: só acessar/alterar <strong>propriedades/talhões</strong> do próprio produtor.</td></tr>
+          <tr><td class="col-id">T-010</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários: “usuário A não acessa dados do usuário B”.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-003 -->
+    <section id="us-003">
+      <h2>US-003 — Cadastro de Propriedade</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-011</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar microsserviço <strong>Properties</strong> (skeleton + Dockerfile).</td></tr>
+          <tr><td class="col-id">T-012</td><td class="col-tag"><span class="tag">BE</span></td><td>Modelar entidade/tabela <strong>Propriedade</strong> (campos mínimos: nome, localização/descrição, ProducerId).</td></tr>
+          <tr><td class="col-id">T-013</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>criar propriedade</strong>.</td></tr>
+          <tr><td class="col-id">T-014</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>listar propriedades do produtor</strong>.</td></tr>
+          <tr><td class="col-id">T-015</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>detalhar propriedade</strong>.</td></tr>
+          <tr><td class="col-id">T-016</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários para CRUD mínimo (create/list/get).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-004 -->
+    <section id="us-004">
+      <h2>US-004 — Cadastro de Talhões (áreas de plantio) com cultura por talhão</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-017</td><td class="col-tag"><span class="tag">BE</span></td><td>Modelar entidade/tabela <strong>Talhão</strong> (campos mínimos: propriedadeId, nome/identificador, cultura).</td></tr>
+          <tr><td class="col-id">T-018</td><td class="col-tag"><span class="tag">BE</span></td><td>Definir formato de <strong>delimitação do talhão</strong> (ex.: polígono/geojson ou coordenadas simples) e implementar no modelo.</td></tr>
+          <tr><td class="col-id">T-019</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>criar talhão</strong> vinculado à propriedade.</td></tr>
+          <tr><td class="col-id">T-020</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>listar talhões por propriedade</strong>.</td></tr>
+          <tr><td class="col-id">T-021</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários: validações (propriedade existe, pertence ao produtor, cultura obrigatória etc.).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-005 -->
+    <section id="us-005">
+      <h2>US-005 — API de Ingestão de Dados de Sensores (simulado) por talhão</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-022</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar microsserviço <strong>Ingestion</strong> (skeleton + Dockerfile).</td></tr>
+          <tr><td class="col-id">T-023</td><td class="col-tag"><span class="tag">BE</span></td><td>Definir payload padrão do sensor (mínimo: talhaoId, umidadeSolo, temperatura, precipitacao, timestamp).</td></tr>
+          <tr><td class="col-id">T-024</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint <strong>POST</strong> para receber leitura do sensor.</td></tr>
+          <tr><td class="col-id">T-025</td><td class="col-tag"><span class="tag">BE</span></td><td>Validar existência do <strong>talhão</strong> (consulta no serviço Properties ou cache/replicação mínima).</td></tr>
+          <tr><td class="col-id">T-026</td><td class="col-tag"><span class="tag">BE</span></td><td>Decidir e aplicar mecanismo de <strong>segurança</strong> na ingestão (ex.: interno/sem auth para simulação, ou API key).</td></tr>
+          <tr><td class="col-id">T-027</td><td class="col-tag"><span class="tag">BE</span></td><td>Publicar evento/mensagem “SensorReadingReceived” na <strong>fila/tópico</strong>.</td></tr>
+          <tr><td class="col-id">T-028</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários: validação do payload + publicação na mensageria (mock).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-006 -->
+    <section id="us-006">
+      <h2>US-006 — Simulador de envio de dados de sensores</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-029</td><td class="col-tag"><span class="tag">DOCS/QA</span></td><td>Criar script simples de simulação (ex.: CLI/Node/Python) para enviar leituras periódicas.</td></tr>
+          <tr><td class="col-id">T-030</td><td class="col-tag"><span class="tag">QA</span></td><td>Criar coleção de requests (curl/Postman) para demonstrar ingestão.</td></tr>
+          <tr><td class="col-id">T-031</td><td class="col-tag"><span class="tag">QA</span></td><td>Preparar massa de dados de exemplo (talhões + leituras) para a demo.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-007 -->
+    <section id="us-007">
+      <h2>US-007 — Persistir leituras de sensores para histórico</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-032</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar microsserviço <strong>Analysis/Alerts</strong> (skeleton + Dockerfile).</td></tr>
+          <tr><td class="col-id">T-033</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar consumidor da mensageria para eventos de leitura (subscribe).</td></tr>
+          <tr><td class="col-id">T-034</td><td class="col-tag"><span class="tag">BE</span></td><td>Modelar armazenamento de <strong>leituras</strong> (tabela/coleção time-series).</td></tr>
+          <tr><td class="col-id">T-035</td><td class="col-tag"><span class="tag">BE</span></td><td>Persistir leitura recebida (com índices por talhão + timestamp).</td></tr>
+          <tr><td class="col-id">T-036</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários: consumo de mensagem + persistência.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-008 -->
+    <section id="us-008">
+      <h2>US-008 — Motor de Alertas: “Alerta de Seca” (umidade &lt; 30% por mais de 24h)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-037</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar lógica de avaliação da regra de seca baseada no histórico das últimas 24h.</td></tr>
+          <tr><td class="col-id">T-038</td><td class="col-tag"><span class="tag">BE</span></td><td>Modelar entidade/tabela <strong>Alerta</strong> (talhaoId, tipo, status, início, fim/ack opcional, detalhes).</td></tr>
+          <tr><td class="col-id">T-039</td><td class="col-tag"><span class="tag">BE</span></td><td>Gerar alerta quando condição for atendida.</td></tr>
+          <tr><td class="col-id">T-040</td><td class="col-tag"><span class="tag">BE</span></td><td>Garantir <strong>não duplicação</strong> (ex.: não criar o mesmo alerta repetidamente enquanto condição persistir).</td></tr>
+          <tr><td class="col-id">T-041</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários cobrindo: não dispara / dispara / não duplica.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-009 -->
+    <section id="us-009">
+      <h2>US-009 — Exibir alertas no dashboard (API para consulta)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-042</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint para <strong>listar alertas por talhão</strong>.</td></tr>
+          <tr><td class="col-id">T-043</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint para <strong>listar alertas do produtor</strong> (agregando talhões).</td></tr>
+          <tr><td class="col-id">T-044</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários dos endpoints e filtros.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-010 -->
+    <section id="us-010">
+      <h2>US-010 — Dashboard: visualizar histórico de sensores em gráfico</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-045</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint para <strong>consultar histórico</strong> (por talhão e intervalo de datas).</td></tr>
+          <tr><td class="col-id">T-046</td><td class="col-tag"><span class="tag">FE</span></td><td>Criar tela de dashboard com seletor de propriedade/talhão.</td></tr>
+          <tr><td class="col-id">T-047</td><td class="col-tag"><span class="tag">FE</span></td><td>Integrar com endpoint de histórico e renderizar <strong>gráfico</strong> (time-series).</td></tr>
+          <tr><td class="col-id">T-048</td><td class="col-tag"><span class="tag">FE</span></td><td>Estados de carregamento/erro para consulta do histórico.</td></tr>
+          <tr><td class="col-id">T-049</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes (mínimo) de integração FE para renderização básica com mock de API.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-011 -->
+    <section id="us-011">
+      <h2>US-011 — Dashboard: status geral por talhão (Normal / Alerta de Seca / Risco de Praga)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-050</td><td class="col-tag"><span class="tag">BE</span></td><td>Definir regra para compor <strong>status do talhão</strong> (mínimo: Normal vs Alerta de Seca a partir do alerta).</td></tr>
+          <tr><td class="col-id">T-051</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar endpoint para <strong>status por talhão</strong> (ou embutir no endpoint de listagem).</td></tr>
+          <tr><td class="col-id">T-052</td><td class="col-tag"><span class="tag">FE</span></td><td>Exibir lista/cartões de talhões com status (badge/cores).</td></tr>
+          <tr><td class="col-id">T-053</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes unitários do cálculo de status.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-012 -->
+    <section id="us-012">
+      <h2>US-012 — Dashboard: exibir lista de alertas ao produtor</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-054</td><td class="col-tag"><span class="tag">FE</span></td><td>Criar componente/lista de alertas (por talhão e/ou geral).</td></tr>
+          <tr><td class="col-id">T-055</td><td class="col-tag"><span class="tag">FE</span></td><td>Integrar com API de alertas e paginar/filtrar minimamente (se necessário).</td></tr>
+          <tr><td class="col-id">T-056</td><td class="col-tag"><span class="tag">FE</span></td><td>Exibir detalhes essenciais do alerta (tipo, data/hora, talhão).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-013 -->
+    <section id="us-013">
+      <h2>US-013 — Mensageria entre microsserviços (RabbitMQ/Kafka)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-057</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Subir RabbitMQ ou Kafka no ambiente (preferencialmente no Kubernetes).</td></tr>
+          <tr><td class="col-id">T-058</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar publisher no <strong>Ingestion</strong>.</td></tr>
+          <tr><td class="col-id">T-059</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar consumer no <strong>Analysis/Alerts</strong>.</td></tr>
+          <tr><td class="col-id">T-060</td><td class="col-tag"><span class="tag">QA</span></td><td>Teste de integração simples (publica → consome).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-014 -->
+    <section id="us-014">
+      <h2>US-014 — Orquestração com Kubernetes (local ou nuvem)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-061</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Criar manifests/Helm para: Identity, Properties, Ingestion, Analysis/Alerts.</td></tr>
+          <tr><td class="col-id">T-062</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Criar manifests/Helm para dependências: DB(s) e mensageria.</td></tr>
+          <tr><td class="col-id">T-063</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Configurar Ingress/Port-forward para expor APIs e frontend.</td></tr>
+          <tr><td class="col-id">T-064</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Configurar ConfigMaps/Secrets para variáveis de ambiente.</td></tr>
+          <tr><td class="col-id">T-065</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Healthchecks/liveness/readiness em todos os serviços.</td></tr>
+          <tr><td class="col-id">T-066</td><td class="col-tag"><span class="tag">QA</span></td><td>Roteiro de “subir tudo” e validar endpoints básicos.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-015 -->
+    <section id="us-015">
+      <h2>US-015 — Observabilidade com Grafana + (Zabbix ou Prometheus)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-067</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Subir stack de observabilidade no cluster (Grafana + Prometheus OU Zabbix + Grafana).</td></tr>
+          <tr><td class="col-id">T-068</td><td class="col-tag"><span class="tag">BE</span></td><td>Instrumentar serviços (métricas básicas: requests, erros, latência; logs estruturados).</td></tr>
+          <tr><td class="col-id">T-069</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Configurar scraping/coleta e dashboards mínimos.</td></tr>
+          <tr><td class="col-id">T-070</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Capturar evidências (prints) para a entrega.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-016 -->
+    <section id="us-016">
+      <h2>US-016 — Pipeline CI/CD automatizado</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-071</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Criar pipeline (GitHub Actions/Azure DevOps) para build + testes.</td></tr>
+          <tr><td class="col-id">T-072</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Build de imagens Docker e push (registry definido pelo time).</td></tr>
+          <tr><td class="col-id">T-073</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Deploy automatizado no Kubernetes (kubectl/helm).</td></tr>
+          <tr><td class="col-id">T-074</td><td class="col-tag"><span class="tag">QA</span></td><td>Validar pipeline end-to-end (commit → deploy).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-017 -->
+    <section id="us-017">
+      <h2>US-017 — Testes unitários mínimos (obrigatório se deploy local)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-075</td><td class="col-tag"><span class="tag">QA</span></td><td>Adicionar projeto de testes por microsserviço.</td></tr>
+          <tr><td class="col-id">T-076</td><td class="col-tag"><span class="tag">QA</span></td><td>Cobrir pelo menos: login, cadastro de propriedade/talhão, ingestão, regra de seca.</td></tr>
+          <tr><td class="col-id">T-077</td><td class="col-tag"><span class="tag">QA</span></td><td>Rodar testes no pipeline.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-018 -->
+    <section id="us-018">
+      <h2>US-018 — Entregável: desenho da solução MVP (diagrama + justificativa + NFRs)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-078</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Desenhar diagrama da arquitetura da solução.</td></tr>
+          <tr><td class="col-id">T-079</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Escrever justificativa técnica das decisões.</td></tr>
+          <tr><td class="col-id">T-080</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Descrever como atender RNFs (observabilidade, escalabilidade, etc.) conforme o enunciado.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-019 -->
+    <section id="us-019">
+      <h2>US-019 — Entregável: demonstração do MVP funcionando (fluxo completo)</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-081</td><td class="col-tag"><span class="tag">QA</span></td><td>Preparar roteiro de demo: login → cadastrar propriedade/talhão → enviar sensor → ver gráfico/alerta.</td></tr>
+          <tr><td class="col-id">T-082</td><td class="col-tag"><span class="tag">QA</span></td><td>Validar dados de exemplo para disparar “Alerta de Seca” (umidade &lt; 30% por 24h).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-020 -->
+    <section id="us-020">
+      <h2>US-020 — Entregável: gravação do vídeo (até 15 min) + link do repositório público</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-083</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Montar roteiro do vídeo cobrindo itens 1–4 exigidos (solução, infra, CI/CD, MVP).</td></tr>
+          <tr><td class="col-id">T-084</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Gravar vídeo e revisar duração.</td></tr>
+          <tr><td class="col-id">T-085</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Publicar repositório <strong>público</strong> e garantir que o README explica como rodar.</td></tr>
+          <tr><td class="col-id">T-086</td><td class="col-tag"><span class="tag">DOCS</span></td><td>Compartilhar links finais (vídeo + repo).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-021 (BÔNUS) -->
+    <section id="us-021">
+      <h2>US-021 — Usar banco NoSQL para dados de sensores (MongoDB ou InfluxDB) — BÔNUS</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-087</td><td class="col-tag"><span class="tag">BE/INFRA</span></td><td>Subir MongoDB/InfluxDB e configurar acesso.</td></tr>
+          <tr><td class="col-id">T-088</td><td class="col-tag"><span class="tag">BE</span></td><td>Ajustar persistência do histórico no Analysis/Alerts para NoSQL.</td></tr>
+          <tr><td class="col-id">T-089</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes de escrita/leitura para histórico.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-022 (BÔNUS) -->
+    <section id="us-022">
+      <h2>US-022 — Ingestão Serverless com API Gateway + Functions — BÔNUS</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-090</td><td class="col-tag"><span class="tag">INFRA</span></td><td>Configurar API Gateway (ou Ingress equivalente) e Function para ingestão.</td></tr>
+          <tr><td class="col-id">T-091</td><td class="col-tag"><span class="tag">BE</span></td><td>Implementar Function para validar payload e publicar na mensageria.</td></tr>
+          <tr><td class="col-id">T-092</td><td class="col-tag"><span class="tag">QA</span></td><td>Validar integração ponta a ponta (simulador → gateway → function → fila → analysis).</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- US-023 (BÔNUS) -->
+    <section id="us-023">
+      <h2>US-023 — Integração com uma API de previsão do tempo no dashboard — BÔNUS</h2>
+      <table>
+        <thead><tr><th class="col-id">Tarefa</th><th class="col-tag">Tag</th><th>Descrição</th></tr></thead>
+        <tbody>
+          <tr><td class="col-id">T-093</td><td class="col-tag"><span class="tag">BE</span></td><td>Integrar com API externa de previsão do tempo (definir provider e credenciais).</td></tr>
+          <tr><td class="col-id">T-094</td><td class="col-tag"><span class="tag">BE</span></td><td>Criar endpoint interno para expor previsão ao frontend.</td></tr>
+          <tr><td class="col-id">T-095</td><td class="col-tag"><span class="tag">FE</span></td><td>Exibir widget de clima no dashboard.</td></tr>
+          <tr><td class="col-id">T-096</td><td class="col-tag"><span class="tag">QA</span></td><td>Testes básicos com stub/mock do provider.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+</body>
+</html>

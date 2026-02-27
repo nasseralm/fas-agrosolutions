@@ -1,0 +1,35 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Visual Studio Code
+.vscode/
+
+# Rider / JetBrains
+.idea/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+bld/
+[Bb]in/
+[Oo]bj/
+
+# Npm package
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Entity Framework
+*.ndb
+
+# SQLite (dev)
+*.db
+*.db-shm
+*.db-wal
